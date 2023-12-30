@@ -1,6 +1,7 @@
 package com.example.exerciseshopspringthymeleaf.model;
 
 import javax.persistence.*;
+import javax.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "product")
@@ -10,11 +11,12 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotEmpty
     private String name;
-
+    @NotEmpty
     private double price;
-
     private String description;
+    private String image;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
@@ -23,10 +25,11 @@ public class Product {
     public Product() {
     }
 
-    public Product(String name, double price, String description, Category category) {
+    public Product(String name, double price, String description, String image, Category category) {
         this.name = name;
         this.price = price;
         this.description = description;
+        this.image = image;
         this.category = category;
     }
 
@@ -60,6 +63,14 @@ public class Product {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
     }
 
     public Category getCategory() {
