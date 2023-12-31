@@ -30,6 +30,10 @@
             <textarea name="description" id="description" cols="30" rows="10" th:field="*{description}"></textarea>
         </div>
         <div>
+            <label for="quantity">Quantity</label>
+            <input type="text" id="quantity" th:field="*{quantity}"/>
+        </div>
+        <div>
             <label for="category">Category</label>
             <select id="category" name="category" th:field="*{category}">
                 <option th:each="p : ${categories}" th:value="${p.id}" th:text="${p.name}"></option>

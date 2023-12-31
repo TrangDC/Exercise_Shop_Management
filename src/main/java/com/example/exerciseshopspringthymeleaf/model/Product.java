@@ -21,6 +21,9 @@ public class Product {
     private String description;
     private String image;
 
+    @ColumnDefault("1")
+    private Long quantity;
+
     @ColumnDefault("true")
     private boolean isActive;
 
@@ -29,16 +32,18 @@ public class Product {
     private Category category;
 
     public Product() {
+        this.quantity = 1L;
         this.isActive = true;
     }
 
-    public Product(String name, double price, String description, String image, Category category) {
+    public Product(String name, double price, String description, String image, Long quantity, boolean isActive, Category category) {
         this.name = name;
         this.price = price;
         this.description = description;
         this.image = image;
+        this.quantity = quantity;
+        this.isActive = isActive;
         this.category = category;
-        this.isActive = true;
     }
 
     public Long getId() {
@@ -95,5 +100,13 @@ public class Product {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 }
