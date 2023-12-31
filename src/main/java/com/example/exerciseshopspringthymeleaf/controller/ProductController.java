@@ -1,5 +1,6 @@
 package com.example.exerciseshopspringthymeleaf.controller;
 
+import com.example.exerciseshopspringthymeleaf.model.Cart;
 import com.example.exerciseshopspringthymeleaf.model.Category;
 import com.example.exerciseshopspringthymeleaf.model.Product;
 import com.example.exerciseshopspringthymeleaf.service.ICategoryService;
@@ -17,6 +18,7 @@ import java.util.ArrayList;
 import java.util.Optional;
 
 @Controller
+@SessionAttributes("cart")
 @RequestMapping("/api/products")
 public class ProductController {
 
@@ -29,6 +31,11 @@ public class ProductController {
     @ModelAttribute("categories")
     public Iterable<Category> listCategories() {
         return iCategoryService.findAll();
+    }
+
+    @ModelAttribute("cart")
+    public Cart setUpCart() {
+        return new Cart();
     }
 
     @GetMapping()
@@ -109,4 +116,38 @@ public class ProductController {
             return "/error-404";
         }
     }
+
+    @GetMapping("/addToCart/{id}")
+    public String addToCart(@PathVariable Long id,
+                            @ModelAttribute Cart cart,
+                            @RequestParam("action") String action) {
+        Optional<Product> productOptional = iProductService.findById(id);
+
+        if(!productOptional.isPresent()) {
+            return "/error-404";
+        }
+        if (action.equals("show")) {
+            cart.addProduct(productOptional.get());
+            return "redirect:/api/shopping-cart";
+        }
+        cart.addProduct(productOptional.get());
+        return "redirect:/api/products";
+    }
+
+    @GetMapping("/sub/{id}")
+    public String subFromCart(@PathVariable Long id,
+                              @ModelAttribute Cart cart,
+                              @RequestParam("action") String action) {
+        Optional<Product> productOptional = iProductService.findById(id);
+        if(!productOptional.isPresent()) {
+            return "/error-404";
+        }
+        if (action.equals("show")) {
+            cart.subProduct(productOptional.get());
+            return "redirect:/api/shopping-cart";
+        }
+        cart.subProduct(productOptional.get());
+        return "redirect:/api/products";
+    }
+
 }

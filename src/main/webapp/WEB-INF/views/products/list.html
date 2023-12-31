@@ -16,18 +16,9 @@
         Sort by age
     </a>
 </p>
-<!--<form th:action="@{/api/products/filter}" method="get">-->
-<!--    <div>-->
-<!--        <label for="gender">Filter by Gender</label>-->
-<!--        <select id="gender" name="gender">-->
-<!--            <option value="" name="gender">All</option>-->
-<!--            <option value="male" name="gender">Male</option>-->
-<!--            <option value="female" name="gender">Female</option>-->
-<!--            <option value="other" name="gender">Other</option>-->
-<!--        </select>-->
-<!--        <button type="submit">Filter</button>-->
-<!--    </div>-->
-<!--</form>-->
+<p>
+    <a href="/api/shopping-cart">Your Cart</a>
+</p>
 <p>
     <a th:href="@{/api/categories}">
         Categories
@@ -51,6 +42,7 @@
         <th>Update</th>
 <!--        <th>Delete</th>-->
         <th>Deactivate</th>
+        <th>Add to Cart</th>
     </tr>
     </thead>
     <tbody>
@@ -64,6 +56,7 @@
         <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">Update</a></td>
 <!--        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">Delete</a></td>-->
         <td><a onclick="return confirm('Are you sure?')" th:href="@{/api/products/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
+        <td><a th:href="@{/api/products/addToCart/__${p.id}__(action='list')}">Add to Cart</a></td>
     </tr>
     </tbody>
 </table>
