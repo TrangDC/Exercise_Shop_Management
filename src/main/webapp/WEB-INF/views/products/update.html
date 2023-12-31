@@ -5,14 +5,14 @@
     <title>Title</title>
 </head>
 <body>
-<h3>Add Product</h3>
+<h3>Update Product</h3>
 <p>
     <a th:href="@{/api/products}">
         Back to product list
     </a>
 </p>
 <div id="form">
-    <form th:action="@{/api/products/add}" th:object="${product}"
+    <form th:object="${product}"
           method="POST">
         <input type="hidden" th:field="*{id}"/>
         <div>

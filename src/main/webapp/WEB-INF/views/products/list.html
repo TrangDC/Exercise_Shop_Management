@@ -47,9 +47,9 @@
         <th>Price</th>
         <th>Description</th>
         <th>Category</th>
-        <th>IsActive</th>
         <th>Update</th>
-        <th>Delete</th>
+<!--        <th>Delete</th>-->
+        <th>Deactivate</th>
     </tr>
     </thead>
     <tbody>
@@ -59,9 +59,9 @@
         <td th:text="${p.getPrice()}"></td>
         <td th:text="${p.getDescription()}"></td>
         <td th:text="${p.getCategory().getName()}"></td>
-        <td th:text="${p.isActive()}"></td>
-        <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">update</a></td>
-        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">delete</a></td>
+        <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">Update</a></td>
+<!--        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">Delete</a></td>-->
+        <td><a th:href="@{/api/products/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
     </tr>
     </tbody>
 </table>
