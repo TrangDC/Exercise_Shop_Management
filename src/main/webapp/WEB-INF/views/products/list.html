@@ -61,7 +61,7 @@
         <td th:text="${p.getCategory().getName()}"></td>
         <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">Update</a></td>
 <!--        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">Delete</a></td>-->
-        <td><a th:href="@{/api/products/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
+        <td><a onclick="return confirm('Are you sure?')" th:href="@{/api/products/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
     </tr>
     </tbody>
 </table>

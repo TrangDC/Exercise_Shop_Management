@@ -95,4 +95,18 @@ public class ProductController {
             return "redirect:/api/products";
         }
     }
+
+    @GetMapping("/deactivate/{id}")
+    public String deactivate(@PathVariable Long id) {
+
+        Optional<Product> productOptional = iProductService.findById(id);
+        if (productOptional.isPresent()) {
+            Product product = productOptional.get();
+            product.setActive(false);
+            iProductService.save(product);
+            return "redirect:/api/products";
+        } else {
+            return "/error-404";
+        }
+    }
 }
