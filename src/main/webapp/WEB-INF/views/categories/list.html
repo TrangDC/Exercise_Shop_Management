@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Category</title>
+</head>
+<body>
+<h3>Categories</h3>
+<p>
+    <a th:href="@{/api/categories/add}">
+        Add new category
+    </a>
+</p>
+<p>
+    <a th:href="@{/api/products}">
+        Products
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+
+<table id = "categories">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Update</th>
+        <th>Deactivate</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p, pStatus : ${categories}" th:if="${p.isActive()}">
+        <td th:text="${pStatus.count}"></td>
+        <td><a th:href="@{/api/categories/view-category/{id}(id=${p.getId()})}" th:text="${p.getName()}"></a></td>
+        <td><a th:href="@{/api/categories/update/{id}(id=${p.getId()})}">update</a></td>
+        <td><a th:href="@{/api/categories/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
