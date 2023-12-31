@@ -17,12 +17,14 @@ public class Product {
     private double price;
     private String description;
     private String image;
+    private boolean isActive;
 
     @ManyToOne
     @JoinColumn(name = "category_id")
     private Category category;
 
     public Product() {
+        this.isActive = true;
     }
 
     public Product(String name, double price, String description, String image, Category category) {
@@ -31,6 +33,7 @@ public class Product {
         this.description = description;
         this.image = image;
         this.category = category;
+        this.isActive = true;
     }
 
     public Long getId() {
@@ -79,5 +82,13 @@ public class Product {
 
     public void setCategory(Category category) {
         this.category = category;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }

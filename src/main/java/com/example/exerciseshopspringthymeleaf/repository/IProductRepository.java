@@ -8,4 +8,6 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 public interface IProductRepository extends JpaRepository<Product, Long>, PagingAndSortingRepository<Product, Long> {
     public Iterable<Product> findAllByCategory(Category category);
 
+    public Iterable<Product> findByNameContaining(String word);
+
 }

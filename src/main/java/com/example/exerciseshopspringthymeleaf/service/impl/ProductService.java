@@ -33,6 +33,11 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Iterable<Product> searchByWord(String word) {
+        return iProductRepository.findByNameContaining(word);
+    }
+
+    @Override
     public Iterable<Product> findByCategory(Category category) {
         return iProductRepository.findAllByCategory(category);
     }

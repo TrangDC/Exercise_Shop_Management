@@ -8,6 +8,7 @@ public class ProductForm {
     private double price;
     private String description;
     private MultipartFile imageFile;  // Trường đại diện cho tệp tin ảnh
+    private boolean isActive;
 
 
     public String getName() {
@@ -40,5 +41,13 @@ public class ProductForm {
 
     public void setImageFile(MultipartFile imageFile) {
         this.imageFile = imageFile;
+    }
+
+    public boolean isActive() {
+        return isActive;
+    }
+
+    public void setActive(boolean active) {
+        isActive = active;
     }
 }
