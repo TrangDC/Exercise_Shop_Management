@@ -1,5 +1,7 @@
 package com.example.exerciseshopspringthymeleaf.configuration;
 
+import com.example.exerciseshopspringthymeleaf.formatter.CategoryFormatter;
+import com.example.exerciseshopspringthymeleaf.service.impl.CategoryService;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
@@ -110,8 +112,8 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
         return properties;
     }
 
-//    @Override
-//    public void addFormatters(FormatterRegistry formatterRegistry) {
-//        formatterRegistry.addFormatter(new ClassroomFormatter(applicationContext.getBean(ClassroomService.class)));
-//    }
+    @Override
+    public void addFormatters(FormatterRegistry formatterRegistry) {
+        formatterRegistry.addFormatter(new CategoryFormatter(applicationContext.getBean(CategoryService.class)));
+    }
 }

@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+</head>
+<body>
+<h3>Products</h3>
+<p>
+    <a th:href="@{/api/products/add}">
+        Add new product
+    </a>
+</p>
+<p>
+    <a th:href="@{/api/products/sort}">
+        Sort by age
+    </a>
+</p>
+<!--<form th:action="@{/api/products/filter}" method="get">-->
+<!--    <div>-->
+<!--        <label for="gender">Filter by Gender</label>-->
+<!--        <select id="gender" name="gender">-->
+<!--            <option value="" name="gender">All</option>-->
+<!--            <option value="male" name="gender">Male</option>-->
+<!--            <option value="female" name="gender">Female</option>-->
+<!--            <option value="other" name="gender">Other</option>-->
+<!--        </select>-->
+<!--        <button type="submit">Filter</button>-->
+<!--    </div>-->
+<!--</form>-->
+<p>
+    <a th:href="@{/api/categories}">
+        Categories
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+
+<table id = "products">
+    <thead>
+    <tr>
+        <th>STT</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th>Description</th>
+        <th>Category</th>
+        <th>IsActive</th>
+        <th>Update</th>
+        <th>Delete</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="p,pStatus : ${products}" th:if="${p.isActive()}">
+        <td th:text="${pStatus.count}"></td>
+        <td th:text="${p.getName()}"></td>
+        <td th:text="${p.getPrice()}"></td>
+        <td th:text="${p.getDescription()}"></td>
+        <td th:text="${p.getCategory().getName()}"></td>
+        <td th:text="${p.isActive()}"></td>
+        <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">update</a></td>
+        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">delete</a></td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>

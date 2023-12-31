@@ -1,7 +1,10 @@
 package com.example.exerciseshopspringthymeleaf.model;
 
+import org.hibernate.annotations.ColumnDefault;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 @Entity
 @Table(name = "product")
@@ -13,10 +16,12 @@ public class Product {
 
     @NotEmpty
     private String name;
-    @NotEmpty
+    @NotNull
     private double price;
     private String description;
     private String image;
+
+    @ColumnDefault("true")
     private boolean isActive;
 
     @ManyToOne
