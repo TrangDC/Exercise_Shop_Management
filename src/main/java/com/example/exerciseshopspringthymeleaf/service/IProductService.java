@@ -14,4 +14,7 @@ public interface IProductService extends IGenerateService<Product> {
 
     public Iterable<Product> sortPriceAscending();
     public Iterable<Product> sortPriceDescending();
+
+    public Page<Product> sortPriceAscending(Pageable pageable);
+    public Page<Product> sortPriceDescending(Pageable pageable);
 }

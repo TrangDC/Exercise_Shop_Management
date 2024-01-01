@@ -67,4 +67,11 @@ public class ProductService implements IProductService {
     public Iterable<Product> findByCategory(Category category) {
         return iProductRepository.findAllByCategory(category);
     }
+
+    public Page<Product> sortPriceAscending(Pageable pageable) {
+        return iProductRepository.findAllByOrderByPriceAsc(pageable);
+    }
+    public Page<Product> sortPriceDescending(Pageable pageable) {
+        return iProductRepository.findAllByOrderByPriceDesc(pageable);
+    }
 }

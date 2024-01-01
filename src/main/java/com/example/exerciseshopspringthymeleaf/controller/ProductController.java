@@ -166,17 +166,21 @@ public class ProductController {
     }
 
     @GetMapping("/sortAsc")
-    public String sortAsc(Model model) {
-        Iterable<Product> products = iProductService.sortPriceAscending();
+    public String sortAsc(Model model,
+                          @PageableDefault(size = 7) Pageable pageable) {
+//        Iterable<Product> products = iProductService.sortPriceAscending();
+        Page<Product> products = iProductService.sortPriceAscending(pageable);
         model.addAttribute("products", products);
-        return "/products/list";
+        return "/products/page";
     }
 
     @GetMapping("/sortDesc")
-    public String sortDesc(Model model) {
-        Iterable<Product> products = iProductService.sortPriceDescending();
+    public String sortDesc(Model model,
+                           @PageableDefault(size = 7) Pageable pageable) {
+//        Iterable<Product> products = iProductService.sortPriceDescending();
+        Page<Product> products = iProductService.sortPriceDescending(pageable);
         model.addAttribute("products", products);
-        return "/products/list";
+        return "/products/page";
     }
 
     @GetMapping("/page/search")
