@@ -40,4 +40,11 @@ public class CartController {
             return "redirect:/api/shopping-cart";
         }
     }
+
+    @GetMapping("/deleteAll")
+    public String deleteFromCart(@ModelAttribute Cart cart) {
+        cart.deleteAllFromCart();
+        return "redirect:/api/shopping-cart";
+    }
+
 }

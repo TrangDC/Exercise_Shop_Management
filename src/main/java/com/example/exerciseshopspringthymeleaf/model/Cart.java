@@ -39,6 +39,7 @@ public class Cart {
 
     //Thêm sản phẩm vào giỏ hàng
     public void addProduct(Product product) {
+        System.out.println("Before add: " + products);
         if (!checkItemInCart(product)) {
             products.put(product, 1);
         } else {
@@ -46,6 +47,8 @@ public class Cart {
             assert itemEntry != null;
             Integer newQuantity = itemEntry.getValue() + 1;
             products.replace(itemEntry.getKey(), newQuantity);
+            product.decreaseQuantity(1);
+            System.out.println("After add: " + products);
         }
     }
 
@@ -58,6 +61,7 @@ public class Cart {
             if (currentQuantity > 1) {
                 Integer newQuantity = itemEntry.getValue() - 1;
                 products.replace(itemEntry.getKey(), newQuantity);
+                product.incrementQuantity(1);
             } else {
                 products.remove(itemEntry.getKey());
             }
@@ -95,5 +99,9 @@ public class Cart {
                 break;
             }
         }
+    }
+
+    public void deleteAllFromCart() {
+        products.clear();
     }
 }

@@ -9,9 +9,11 @@
   <a href="/api/products">List Products</a>
 </p>
 <h1>Your Cart</h1>
+<a th:href="@{/api/shopping-cart/deleteAll}" th:if="${cart.countItemQuantity()} > 0">Delete All</a>
 <form th:object="${cart}" method="post">
   <h3>Total Items: <span th:text="${cart.countItemQuantity()}"></span></h3>
   <h3>Total Products: <span th:text="${cart.countProductQuantity()}"></span></h3>
+
   <table border="1">
     <thead>
     <tr>
@@ -40,7 +42,6 @@
       <td></td>
     </tr>
   </table>
-
 </form>
 </body>
 </html>

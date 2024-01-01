@@ -109,4 +109,19 @@ public class Product {
     public void setQuantity(Long quantity) {
         this.quantity = quantity;
     }
+
+    //trừ đi sản phẩm khi được thêm vào giỏ hàng
+    public void decreaseQuantity(int quantityToDecrease) {
+        System.out.println("Before decrease: " + quantity);
+        if (quantityToDecrease > 0 && quantity >= quantityToDecrease) {
+            quantity -= quantityToDecrease;
+            System.out.println("After decrease: " + quantity);
+        } else {
+            System.out.println("Out of stock.");
+        }
+    }
+
+    public void incrementQuantity(int quantityReturned) {
+            quantity += quantityReturned;
+    }
 }
