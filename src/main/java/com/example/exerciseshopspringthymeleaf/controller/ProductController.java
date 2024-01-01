@@ -7,6 +7,9 @@ import com.example.exerciseshopspringthymeleaf.repository.IProductRepository;
 import com.example.exerciseshopspringthymeleaf.service.ICategoryService;
 import com.example.exerciseshopspringthymeleaf.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -54,6 +57,14 @@ public class ProductController {
             }
         }
         modelAndView.addObject("products", productsTrue);
+        return modelAndView;
+    }
+
+    @GetMapping("/page")
+    public ModelAndView listProductsActive(@PageableDefault(size = 7)Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("/products/page");
+        Page<Product> products = iProductService.findAllPage(pageable);
+        modelAndView.addObject("products", products);
         return modelAndView;
     }
 
@@ -168,11 +179,13 @@ public class ProductController {
         return "/products/list";
     }
 
-    @GetMapping("/search")
-    public String search(@RequestParam("keyword") String keyword,
-                         Model model) {
-        Iterable<Product> products = iProductService.searchByWord(keyword);
-        model.addAttribute("products", products);
-        return "/products/list";
+    @GetMapping("/page/search")
+    public ModelAndView search(@RequestParam("keyword") String keyword,
+                               @PageableDefault(size = 4) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("/products/page_search");
+        Page<Product> products = iProductService.searchByWord(keyword, pageable);
+        modelAndView.addObject("products", products);
+        modelAndView.addObject("keyword", keyword);
+        return modelAndView;
     }
 }

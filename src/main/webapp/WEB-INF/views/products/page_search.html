@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>List Product</title>
+</head>
+<body>
+<h3>Products</h3>
+<p>
+    <a th:href="@{/api/products}">
+        Home
+    </a>
+</p>
+<form th:action="@{/api/products/page/search}" method="get">
+    <input type="text" name="keyword" id="keyword">
+    <input type="submit" value="Search">
+</form>
+<p>
+    <a th:href="@{/api/products/add}">
+        Add new product
+    </a>
+</p>
+<span>
+    <a th:href="@{/api/products/sortAsc}">
+        Price: A-Z
+    </a>
+</span> ||
+<span>
+    <a th:href="@{/api/products/sortDesc}">
+        Price: Z-A
+    </a>
+</span>
+<p>
+    <a href="/api/shopping-cart">Your Cart</a>
+</p>
+<p>
+    <a th:href="@{/api/categories}">
+        Categories
+    </a>
+</p>
+<div class="notify">
+    <div th:if="${message}">
+        <span th:text="${message}"></span>
+    </div>
+</div>
+<div>
+    <table id = "products">
+        <thead>
+        <tr>
+            <th>STT</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Category</th>
+            <th>Update</th>
+            <!--        <th>Delete</th>-->
+            <th>Deactivate</th>
+            <th>Add to Cart</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="p,pStatus : ${products}" th:if="${p.isActive()}">
+            <td th:text="${pStatus.count}"></td>
+            <td th:text="${p.getName()}"></td>
+            <td th:text="${p.getPrice()}"></td>
+            <td th:text="${p.getDescription()}"></td>
+            <td th:text="${p.getQuantity()}"></td>
+            <td th:text="${p.getCategory().getName()}"></td>
+            <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">Update</a></td>
+            <!--        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">Delete</a></td>-->
+            <td><a onclick="return confirm('Are you sure?')" th:href="@{/api/products/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
+            <td><a th:href="@{/api/products/addToCart/__${p.id}__(action='list')}">Add to Cart</a></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+<div class="container">
+    <a th:if="${products.hasPrevious()}"
+       th:href="@{/api/products/page/search(keyword=${keyword}, page=${products.number - 1})}"
+       class="btn btn-primary">Prev</a>
+    <span th:text="${products.number + 1}"></span>
+    |&nbsp;<span th:text="${products.totalPages}"></span>
+    <a th:if="${products.hasNext()}"
+       th:href="@{/api/products/page/search(keyword=${keyword}, page=${products.number + 1})}"
+       class="btn btn-primary">Next</a>
+</div>
+</body>
+</html>

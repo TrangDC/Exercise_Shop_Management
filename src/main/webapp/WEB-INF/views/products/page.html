@@ -43,7 +43,7 @@
         <span th:text="${message}"></span>
     </div>
 </div>
-
+<div>
 <table id = "products">
     <thead>
     <tr>
@@ -54,7 +54,7 @@
         <th>Quantity</th>
         <th>Category</th>
         <th>Update</th>
-<!--        <th>Delete</th>-->
+        <!--        <th>Delete</th>-->
         <th>Deactivate</th>
         <th>Add to Cart</th>
     </tr>
@@ -68,11 +68,22 @@
         <td th:text="${p.getQuantity()}"></td>
         <td th:text="${p.getCategory().getName()}"></td>
         <td><a th:href="@{/api/products/update/{id}(id=${p.getId()})}">Update</a></td>
-<!--        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">Delete</a></td>-->
+        <!--        <td><a th:href="@{/api/products/delete/{id}(id=${p.getId()})}">Delete</a></td>-->
         <td><a onclick="return confirm('Are you sure?')" th:href="@{/api/products/deactivate/{id}(id=${p.getId()})}">Deactivate</a></td>
         <td><a th:href="@{/api/products/addToCart/__${p.id}__(action='list')}">Add to Cart</a></td>
     </tr>
     </tbody>
 </table>
+</div>
+<div class="container">
+    <a th:if="${products.hasPrevious()}"
+       th:href="@{/api/products/page(page=${products.number - 1})}"
+       class="btn btn-primary">Prev</a>
+    <span th:text="${products.number + 1}"></span>
+    |&nbsp;<span th:text="${products.totalPages}"></span>
+    <a th:if="${products.hasNext()}"
+       th:href="@{/api/products/page(page=${products.number + 1})}"
+       class="btn btn-primary">Next</a>
+</div>
 </body>
 </html>

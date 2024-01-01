@@ -6,6 +6,9 @@ import com.example.exerciseshopspringthymeleaf.repository.ICategoryRepository;
 import com.example.exerciseshopspringthymeleaf.service.ICategoryService;
 import com.example.exerciseshopspringthymeleaf.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -28,7 +31,14 @@ public class CategoryController {
     public ModelAndView listCategories() {
         ModelAndView modelAndView = new ModelAndView("/categories/list");
         Iterable<Category> categories = iCategoryService.findAll();
+        modelAndView.addObject("categories", categories);
+        return modelAndView;
+    }
 
+    @GetMapping("/page")
+    public ModelAndView listCategories(@PageableDefault(size = 5) Pageable pageable) {
+        ModelAndView modelAndView = new ModelAndView("/categories/page");
+        Iterable<Category> categories = iCategoryService.findAllPage(pageable);
         modelAndView.addObject("categories", categories);
         return modelAndView;
     }

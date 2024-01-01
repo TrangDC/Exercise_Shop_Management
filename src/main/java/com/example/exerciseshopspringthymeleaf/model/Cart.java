@@ -47,7 +47,7 @@ public class Cart {
             assert itemEntry != null;
             Integer newQuantity = itemEntry.getValue() + 1;
             products.replace(itemEntry.getKey(), newQuantity);
-            product.decreaseQuantity(1);
+//            product.decreaseQuantity(1);
             System.out.println("After add: " + products);
         }
     }
@@ -61,7 +61,7 @@ public class Cart {
             if (currentQuantity > 1) {
                 Integer newQuantity = itemEntry.getValue() - 1;
                 products.replace(itemEntry.getKey(), newQuantity);
-                product.incrementQuantity(1);
+//                product.incrementQuantity(1);
             } else {
                 products.remove(itemEntry.getKey());
             }

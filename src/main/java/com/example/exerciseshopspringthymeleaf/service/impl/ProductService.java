@@ -5,9 +5,15 @@ import com.example.exerciseshopspringthymeleaf.model.Product;
 import com.example.exerciseshopspringthymeleaf.repository.IProductRepository;
 import com.example.exerciseshopspringthymeleaf.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+
 @Service
 public class ProductService implements IProductService {
     @Autowired
@@ -33,8 +39,18 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Page<Product> findAllPage(Pageable pageable) {
+        return iProductRepository.findAll(pageable);
+    }
+
+    @Override
     public Iterable<Product> searchByWord(String word) {
         return iProductRepository.findByNameContaining(word);
+    }
+
+    @Override
+    public Page<Product> searchByWord(String word, Pageable pageable) {
+        return iProductRepository.findAllByNameContaining(word, pageable);
     }
 
     @Override
