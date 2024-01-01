@@ -38,6 +38,16 @@ public class ProductService implements IProductService {
     }
 
     @Override
+    public Iterable<Product> sortPriceAscending() {
+        return iProductRepository.findAllByOrderByPriceAsc();
+    }
+
+    @Override
+    public Iterable<Product> sortPriceDescending() {
+        return iProductRepository.findAllByOrderByPriceDesc();
+    }
+
+    @Override
     public Iterable<Product> findByCategory(Category category) {
         return iProductRepository.findAllByCategory(category);
     }

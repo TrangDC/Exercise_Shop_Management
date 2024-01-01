@@ -24,7 +24,7 @@ public class CartController {
 
     @GetMapping("")
     public ModelAndView showCart(@SessionAttribute("cart") Cart cart) {
-        ModelAndView modelAndView = new ModelAndView("/cart/cart");
+        ModelAndView modelAndView = new ModelAndView("/cart/list");
         modelAndView.addObject("cart", cart);
         return modelAndView;
     }

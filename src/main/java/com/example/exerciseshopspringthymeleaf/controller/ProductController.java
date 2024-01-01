@@ -3,6 +3,7 @@ package com.example.exerciseshopspringthymeleaf.controller;
 import com.example.exerciseshopspringthymeleaf.model.Cart;
 import com.example.exerciseshopspringthymeleaf.model.Category;
 import com.example.exerciseshopspringthymeleaf.model.Product;
+import com.example.exerciseshopspringthymeleaf.repository.IProductRepository;
 import com.example.exerciseshopspringthymeleaf.service.ICategoryService;
 import com.example.exerciseshopspringthymeleaf.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,9 @@ public class ProductController {
 
     @Autowired
     private ICategoryService iCategoryService;
+
+    @Autowired
+    private IProductRepository iProductRepository;
 
     @ModelAttribute("categories")
     public Iterable<Category> listCategories() {
@@ -150,4 +154,25 @@ public class ProductController {
         return "redirect:/api/products";
     }
 
+    @GetMapping("/sortAsc")
+    public String sortAsc(Model model) {
+        Iterable<Product> products = iProductService.sortPriceAscending();
+        model.addAttribute("products", products);
+        return "/products/list";
+    }
+
+    @GetMapping("/sortDesc")
+    public String sortDesc(Model model) {
+        Iterable<Product> products = iProductService.sortPriceDescending();
+        model.addAttribute("products", products);
+        return "/products/list";
+    }
+
+    @GetMapping("/search")
+    public String search(@RequestParam("keyword") String keyword,
+                         Model model) {
+        Iterable<Product> products = iProductService.searchByWord(keyword);
+        model.addAttribute("products", products);
+        return "/products/list";
+    }
 }

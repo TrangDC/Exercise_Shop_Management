@@ -10,4 +10,7 @@ public interface IProductRepository extends JpaRepository<Product, Long>, Paging
 
     public Iterable<Product> findByNameContaining(String word);
 
+    public Iterable<Product> findAllByOrderByPriceAsc();
+    public Iterable<Product> findAllByOrderByPriceDesc();
+
 }

@@ -7,15 +7,29 @@
 <body>
 <h3>Products</h3>
 <p>
+    <a th:href="@{/api/products}">
+        Home
+    </a>
+</p>
+<form th:action="@{/api/products/search}" method="get">
+    <input type="text" name="keyword" id="keyword">
+    <input type="submit" value="Search">
+</form>
+<p>
     <a th:href="@{/api/products/add}">
         Add new product
     </a>
 </p>
-<p>
-    <a th:href="@{/api/products/sort}">
-        Sort by age
+<span>
+    <a th:href="@{/api/products/sortAsc}">
+        Price: A-Z
     </a>
-</p>
+</span> ||
+<span>
+    <a th:href="@{/api/products/sortDesc}">
+        Price: Z-A
+    </a>
+</span>
 <p>
     <a href="/api/shopping-cart">Your Cart</a>
 </p>
