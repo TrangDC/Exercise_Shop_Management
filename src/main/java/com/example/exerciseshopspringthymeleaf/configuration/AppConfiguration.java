@@ -131,7 +131,7 @@ public class AppConfiguration implements WebMvcConfigurer, ApplicationContextAwa
 
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
-        registry.addResourceHandler("/image/**")
+        registry.addResourceHandler("java/com/example/exerciseshopspringthymeleaf/image/**")
                 .addResourceLocations("file:" + upload);
     }
 
