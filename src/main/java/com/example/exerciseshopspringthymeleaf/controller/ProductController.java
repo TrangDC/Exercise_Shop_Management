@@ -86,13 +86,11 @@ public class ProductController {
                                    BindingResult bindingResult,
                                    @PageableDefault(size = 7)Pageable pageable) {
         if (bindingResult.hasErrors()) {
-            System.out.println(bindingResult);
             ModelAndView modelAndView = new ModelAndView("/products/add");
             modelAndView.addObject("product", productForm);
             return modelAndView;
         } else {
             MultipartFile multipartFile = productForm.getImage();
-            System.out.println(multipartFile);
             String fileName = multipartFile.getOriginalFilename();
 
             try {
@@ -123,17 +121,41 @@ public class ProductController {
     }
 
     @PostMapping("/update/{id}")
-    public String update(@Validated @ModelAttribute Product product,
+    public String update(@Validated @ModelAttribute ProductForm productForm,
                          BindingResult bindingResult,
                          RedirectAttributes redirectAttributes,
-                         Model model) {
+                         Model model,
+                         @PathVariable Long id) {
         if (bindingResult.hasErrors()) {
-            model.addAttribute("product", product);
+            model.addAttribute("product", productForm);
             return "/products/update";
         } else {
-            iProductService.save(product);
-            redirectAttributes.addFlashAttribute("message", "Update Successfully");
-            return "redirect:/api/products/page";
+            Optional<Product> existingProductOptional = iProductService.findById(id);
+
+            if (existingProductOptional.isPresent()) {
+                MultipartFile multipartFile = productForm.getImage();
+                String fileName = multipartFile.getOriginalFilename();
+
+                try {
+                    FileCopyUtils.copy(productForm.getImage().getBytes(), new File(fileUpload + fileName));
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                Product existingProduct = existingProductOptional.get();
+                existingProduct.setName(productForm.getName());
+                existingProduct.setPrice(productForm.getPrice());
+                existingProduct.setDescription(productForm.getDescription());
+                existingProduct.setImage(fileName);
+                existingProduct.setQuantity(productForm.getQuantity());
+                existingProduct.setCategory(productForm.getCategory());
+
+                iProductService.save(existingProduct);
+                redirectAttributes.addFlashAttribute("message", "Update Successfully");
+                return "redirect:/api/products/page";
+            } else {
+                return "/error-404";
+            }
         }
     }
 

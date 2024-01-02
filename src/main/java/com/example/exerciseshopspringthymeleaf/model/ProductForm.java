@@ -12,14 +12,18 @@ public class ProductForm {
 
     private Long id;
 
+    @NotEmpty
     private String name;
-
+    @NotNull
     private double price;
     private String description;
     private MultipartFile image;
 
+    @ColumnDefault("1")
+    @NotNull
     private Long quantity;
 
+    @ColumnDefault("true")
     private boolean isActive;
 
     private Category category;

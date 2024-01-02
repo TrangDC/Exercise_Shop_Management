@@ -23,6 +23,7 @@ public class Product {
     private String image;
 
     @ColumnDefault("1")
+    @NotNull
     private Long quantity;
 
     @ColumnDefault("true")
