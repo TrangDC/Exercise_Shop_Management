@@ -93,10 +93,6 @@ public class ProductController {
             MultipartFile multipartFile = productForm.getImage();
             String fileName = multipartFile.getOriginalFilename();
 
-            if (fileName == null || fileName.isEmpty()) {
-                fileName = "default_product.jpg";
-            }
-
             try {
                 FileCopyUtils.copy(productForm.getImage().getBytes(), new File(fileUpload + fileName));
             } catch (IOException ex) {
