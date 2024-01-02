@@ -3,6 +3,7 @@ package com.example.exerciseshopspringthymeleaf.model;
 import org.hibernate.annotations.ColumnDefault;
 
 import javax.persistence.*;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -22,6 +23,7 @@ public class Product {
     private String image;
 
     @ColumnDefault("1")
+    @Min(value = 1, message = "Quantity must be greater than or equal to 1")
     private Long quantity;
 
     @ColumnDefault("true")
