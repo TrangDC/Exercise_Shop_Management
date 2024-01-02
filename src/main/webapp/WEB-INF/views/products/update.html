@@ -41,7 +41,7 @@
         </div>
         <div>
             <label for="image">Image</label>
-            <input type="file" id="image" th:field="*{image}" th:value="${product.getImage()}"/>
+            <input type="file" id="image" th:field="*{image}" th:text="'source: ' + ${product.getImage()}"/>
         </div>
         <input type="submit" value="Save"/>
     </form>

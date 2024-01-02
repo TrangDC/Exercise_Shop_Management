@@ -4,6 +4,8 @@ import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
+import javax.validation.constraints.DecimalMin;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,12 +20,14 @@ public class Product {
     @NotEmpty
     private String name;
     @NotNull
+    @DecimalMin(value = "1000.0", message = "Price must be at least 1000 vnđ")
     private double price;
     private String description;
     private String image;
 
     @ColumnDefault("1")
     @NotNull
+    @Min(value = 1, message = "Quantity must be at least 1")
     private Long quantity;
 
     @ColumnDefault("true")
