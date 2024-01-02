@@ -3,21 +3,27 @@ package com.example.exerciseshopspringthymeleaf.controller;
 import com.example.exerciseshopspringthymeleaf.model.Cart;
 import com.example.exerciseshopspringthymeleaf.model.Category;
 import com.example.exerciseshopspringthymeleaf.model.Product;
+import com.example.exerciseshopspringthymeleaf.model.ProductForm;
 import com.example.exerciseshopspringthymeleaf.repository.IProductRepository;
 import com.example.exerciseshopspringthymeleaf.service.ICategoryService;
 import com.example.exerciseshopspringthymeleaf.service.IProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -32,8 +38,8 @@ public class ProductController {
     @Autowired
     private ICategoryService iCategoryService;
 
-    @Autowired
-    private IProductRepository iProductRepository;
+    @Value("${file-upload}")
+    private String fileUpload;
 
     @ModelAttribute("categories")
     public Iterable<Category> listCategories() {
@@ -71,20 +77,31 @@ public class ProductController {
     @GetMapping("/add")
     public ModelAndView addForm() {
         ModelAndView modelAndView = new ModelAndView("/products/add");
-        modelAndView.addObject("product", new Product());
+        modelAndView.addObject("product", new ProductForm());
         return modelAndView;
     }
 
     @PostMapping("/add")
-    public ModelAndView addProduct(@Validated @ModelAttribute Product product,
+    public ModelAndView addProduct(@Validated @ModelAttribute("product") ProductForm productForm,
                                    BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
+            System.out.println(bindingResult);
             ModelAndView modelAndView = new ModelAndView("/products/add");
-            modelAndView.addObject("product", product);
+            modelAndView.addObject("product", productForm);
             return modelAndView;
         } else {
+            MultipartFile multipartFile = productForm.getImage();
+            System.out.println(multipartFile);
+            String fileName = multipartFile.getOriginalFilename();
+            try {
+                FileCopyUtils.copy(productForm.getImage().getBytes(), new File(fileUpload + fileName));
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            Product product = new Product(productForm.getName(), productForm.getPrice(),
+                    productForm.getDescription(), fileName, productForm.getQuantity(), productForm.getCategory());
             iProductService.save(product);
-            ModelAndView modelAndView = new ModelAndView("/products/list");
+            ModelAndView modelAndView = new ModelAndView("/products/page");
             Iterable<Product> products = iProductService.findAll();
             modelAndView.addObject("products", products);
             return modelAndView;
@@ -114,7 +131,7 @@ public class ProductController {
         } else {
             iProductService.save(product);
             redirectAttributes.addFlashAttribute("message", "Update Successfully");
-            return "redirect:/api/products";
+            return "redirect:/api/products/page";
         }
     }
 

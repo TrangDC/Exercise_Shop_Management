@@ -1,6 +1,7 @@
 package com.example.exerciseshopspringthymeleaf.model;
 
 import org.hibernate.annotations.ColumnDefault;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotEmpty;
@@ -34,6 +35,16 @@ public class Product {
     public Product() {
         this.quantity = 1L;
         this.isActive = true;
+    }
+
+    public Product(String name, double price, String description, String image, Long quantity, Category category) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.image = image;
+        this.quantity = quantity;
+        this.isActive = true;
+        this.category = category;
     }
 
     public Product(String name, double price, String description, String image, Long quantity, boolean isActive, Category category) {

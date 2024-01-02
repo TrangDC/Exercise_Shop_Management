@@ -1,15 +1,51 @@
 package com.example.exerciseshopspringthymeleaf.model;
 
+import org.hibernate.annotations.ColumnDefault;
 import org.springframework.web.multipart.MultipartFile;
+
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 
 public class ProductForm {
 
+    private Long id;
+
     private String name;
+
     private double price;
     private String description;
-    private MultipartFile imageFile;  // Trường đại diện cho tệp tin ảnh
+    private MultipartFile image;
+
+    private Long quantity;
+
     private boolean isActive;
 
+    private Category category;
+
+    public ProductForm() {
+        this.quantity = 1L;
+        this.isActive = true;
+    }
+
+    public ProductForm(String name, double price, String description, MultipartFile image, Long quantity, Category category) {
+        this.name = name;
+        this.price = price;
+        this.description = description;
+        this.image = image;
+        this.quantity = quantity;
+        this.isActive = true;
+        this.category = category;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
 
     public String getName() {
         return name;
@@ -35,12 +71,20 @@ public class ProductForm {
         this.description = description;
     }
 
-    public MultipartFile getImageFile() {
-        return imageFile;
+    public MultipartFile getImage() {
+        return image;
     }
 
-    public void setImageFile(MultipartFile imageFile) {
-        this.imageFile = imageFile;
+    public void setImage(MultipartFile image) {
+        this.image = image;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public boolean isActive() {
@@ -49,5 +93,13 @@ public class ProductForm {
 
     public void setActive(boolean active) {
         isActive = active;
+    }
+
+    public Long getQuantity() {
+        return quantity;
+    }
+
+    public void setQuantity(Long quantity) {
+        this.quantity = quantity;
     }
 }
