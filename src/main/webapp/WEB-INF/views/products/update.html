@@ -13,7 +13,7 @@
 </p>
 <div id="form">
     <form th:object="${product}"
-          method="POST">
+          method="POST" enctype="multipart/form-data">
         <input type="hidden" th:field="*{id}"/>
         <div>
             <label for="name">Name</label>
@@ -38,6 +38,10 @@
             <select id="category" name="category" th:field="*{category}">
                 <option th:each="p : ${categories}" th:value="${p.id}" th:text="${p.name}"></option>
             </select>
+        </div>
+        <div>
+            <label for="image">Image</label>
+            <input type="file" id="image" th:field="*{image}"/>
         </div>
         <input type="submit" value="Save"/>
     </form>

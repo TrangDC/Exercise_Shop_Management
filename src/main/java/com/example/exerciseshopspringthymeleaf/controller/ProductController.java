@@ -83,7 +83,8 @@ public class ProductController {
 
     @PostMapping("/add")
     public ModelAndView addProduct(@Validated @ModelAttribute("product") ProductForm productForm,
-                                   BindingResult bindingResult) {
+                                   BindingResult bindingResult,
+                                   @PageableDefault(size = 7)Pageable pageable) {
         if (bindingResult.hasErrors()) {
             System.out.println(bindingResult);
             ModelAndView modelAndView = new ModelAndView("/products/add");
@@ -103,7 +104,7 @@ public class ProductController {
                     productForm.getDescription(), fileName, productForm.getQuantity(), productForm.getCategory());
             iProductService.save(product);
             ModelAndView modelAndView = new ModelAndView("/products/page");
-            Iterable<Product> products = iProductService.findAll();
+            Page<Product> products = iProductService.findAllPage(pageable);
             modelAndView.addObject("products", products);
             return modelAndView;
         }

@@ -39,10 +39,10 @@
                 <option th:each="p : ${categories}" th:value="${p.id}" th:text="${p.name}"></option>
             </select>
         </div>
-        <tr>
-            <td><label for="image">Image</label></td>
-            <td><input type="file" id="image" th:field="*{image}"/></td>
-        </tr>
+        <div>
+            <label for="image">Image</label>
+            <input type="file" id="image" th:field="*{image}"/>
+        </div>
         <input type="submit" value="Save"/>
     </form>
 </div>
